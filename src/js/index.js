@@ -52,6 +52,40 @@ const insertYearOptions = () => {
     }
 };
 
+
+// When selecting a year change the receiver list
+// Make sure that a person can't give prezzies to himself
+elements.selectYear.addEventListener('change', event => {
+    const peopleArr = state.receiverList;
+    
+    // Get full year and the selected year to find the difference
+    const currentYear = new Date().getFullYear();
+    const year = event.target.value;
+
+    const difference = year - currentYear;
+    console.log("difference:", difference);
+
+    // Change the receiver list depending on the year difference
+    if (difference === 1) {
+        const firstItem = peopleArr[0];
+        const newPeopleArr = peopleArr.slice(1);
+        newPeopleArr.push(firstItem);
+
+        elements.receiverList.innerHTML = createItemList(newPeopleArr, 'name');
+    } else {
+        const firstItems = peopleArr.slice(0, difference);
+        const newPeopleArr = peopleArr.slice(difference);
+
+        for (let item of firstItems) {
+            newPeopleArr.push(item);
+        }
+
+        elements.receiverList.innerHTML = createItemList(newPeopleArr, 'name');
+    }
+    
+});
+
+
 // The initial setup on runtime
 const init = () => {
     insertYearOptions();
