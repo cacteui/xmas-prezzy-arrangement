@@ -1,9 +1,14 @@
 import people from '../data/people.json';
 
 const elements = {
-    staticList: document.querySelector('.list__static'),
-    dynamicList: document.querySelector('.list__dynamic'),
+    giverList: document.querySelector('.list__giver'),
+    receiverList: document.querySelector('.list__receiver'),
     selectYear: document.querySelector('.select-year')
+};
+
+const state = {
+    peopleArr: people,
+    receiverList: []
 };
 
 // Helper method to insert items to list
@@ -18,21 +23,21 @@ const createItemList = (arr, property) => {
 }
 
 
-// Insert the static list of people into document
-const insertStaticList = () => {
-    const unchangedPeopleList = createItemList(people, 'name');
-    elements.staticList.innerHTML = unchangedPeopleList;
+// Insert the giver list
+const insertGiverList = () => {
+    elements.giverList.innerHTML = createItemList(people, 'name');
 }
 
 
-// Insert dynamic list
-const insertDynamicList = () => {
-    const peopleArr = people;
+// Insert receiver list
+const insertReceiverList = () => {
+    const peopleArr = state.peopleArr;
     const firstItem = peopleArr[0];
     const remainingItems = peopleArr.slice(1);
     remainingItems.push(firstItem);
 
-    elements.dynamicList.innerHTML = createItemList(remainingItems, 'name');
+    elements.receiverList.innerHTML = createItemList(remainingItems, 'name');
+    state.receiverList = remainingItems;
 };
 
 
@@ -50,8 +55,8 @@ const insertYearOptions = () => {
 // The initial setup on runtime
 const init = () => {
     insertYearOptions();
-    insertStaticList();
-    insertDynamicList();
+    insertGiverList();
+    insertReceiverList();
 }
 
 init();
