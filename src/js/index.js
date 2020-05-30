@@ -17,12 +17,13 @@ const createItemList = (arr, property) => {
     return list;
 }
 
+
 // Insert the static list of people into document
 const insertStaticList = () => {
     const unchangedPeopleList = createItemList(people, 'name');
     elements.staticList.innerHTML = unchangedPeopleList;
 }
-insertStaticList();
+
 
 // Insert dynamic list
 const insertDynamicList = () => {
@@ -33,7 +34,7 @@ const insertDynamicList = () => {
 
     elements.dynamicList.innerHTML = createItemList(remainingItems, 'name');
 };
-insertDynamicList();
+
 
 // Create select of years
 const insertYearOptions = () => {
@@ -45,4 +46,12 @@ const insertYearOptions = () => {
         elements.selectYear.insertAdjacentHTML('beforeend', option);
     }
 };
-insertYearOptions();
+
+// The initial setup on runtime
+const init = () => {
+    insertYearOptions();
+    insertStaticList();
+    insertDynamicList();
+}
+
+init();
