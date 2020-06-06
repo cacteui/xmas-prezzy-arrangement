@@ -1,0 +1,45 @@
+{
+    "originalYear": 2020,
+    "participants": [
+        {
+            "name": "Person 1",
+            "id": 1,
+            "givesPresentTo": 2
+        },
+        {
+            "name": "Person 2",
+            "id": 2,
+            "givesPresentTo": 3
+        },
+        {
+            "name": "Person 3",
+            "id": 3,
+            "givesPresentTo": 4
+        },
+        {
+            "name": "Person 4",
+            "id": 4,
+            "givesPresentTo": 5
+        },
+        {
+            "name": "Person 5",
+            "id": 5,
+            "givesPresentTo": 6
+        },
+        {
+            "name": "Person 6",
+            "id": 6,
+            "givesPresentTo": 7
+        },
+        {
+            "name": "Person 7",
+            "id": 7,
+            "givesPresentTo": 8
+        },
+        {
+            "name": "Person 8",
+            "id": 8,
+            "givesPresentTo": 1
+        }
+    ]
+}
