@@ -1,49 +1,46 @@
 import data from '../data/data.json';
-
-const elements = {
-    giverList: document.querySelector('.list__giver'),
-    receiverList: document.querySelector('.list__receiver'),
-    selectYear: document.querySelector('.select-year')
-};
+import { viewElements } from './base.js';
 
 const state = {
+    data: data,
     participants: data.participants,
 };
 
-const createList = () => {
+// Create a list of participants and the participant they should give a prezzy
+const createPrezzyList = () => {
     let list = ``;
     
     for (let participant of state.participants) {
-        const receiver = state.participants.find(receiver => receiver.id === participant.givesPresentTo);
+        const receiver = state.participants.find(receiver => receiver.id === participant.givesPrezzyTo);
         list += `<li>${participant.name} gives present to ${receiver.name}</li>`;
     };
 
     return list;
 };
 
-// Insert the list
-const insertGiverList = () => {
-    elements.giverList.innerHTML = createList();
+// View list on UI
+const insertPrezzyList = () => {
+    viewElements.giverList.innerHTML = createPrezzyList();
 }
 
-// Create a select of years
+// Insert options to the years select
 const insertYearOptions = () => {
     const currentYear = new Date().getFullYear();
 
-    for (let i = 0; i <= data.yearsToSeeInFuture; i++) {
+    for (let i = 0; i <= state.data.yearsToSeeInFuture; i++) {
         const year = currentYear + i;
         const option = `<option value="${year}">${year}</option>`;
-        elements.selectYear.insertAdjacentHTML('beforeend', option);
+        viewElements.selectYear.insertAdjacentHTML('beforeend', option);
     }
 };
 
 // When selecting a year change the receiver list
-// Make sure that a person can't give prezzies to himself
-elements.selectYear.addEventListener('change', event => {
+viewElements.selectYear.addEventListener('change', event => {
+    let list = ``;
     const participants = state.participants;
     
     // Get the original year from data and the selected year to find the difference
-    const originalYear = data.originalYear;
+    const originalYear = state.data.originalYear;
     const year = event.target.value;
     const yearDifference = year - originalYear;
 
@@ -51,11 +48,9 @@ elements.selectYear.addEventListener('change', event => {
     // happen, which is the participants array length - 1
     const amountOfJumps = Math.floor(yearDifference / (participants.length - 1));
     
-    let list = ``;
-
     for (let participant of participants) {
         // Add the year difference to the receiverId to find the receiver for that year
-        let receiverId = participant.givesPresentTo + yearDifference;
+        let receiverId = participant.givesPrezzyTo + yearDifference;
 
         // To avoid the situation that a participant gives present to himself/herself
         if (amountOfJumps > 0) {
@@ -85,13 +80,13 @@ elements.selectYear.addEventListener('change', event => {
         list += `<li>${participant.name} gives present to ${receiver.name}</li>`;
     }
 
-    elements.giverList.innerHTML = list;
+    // Update the list on the UI
+    viewElements.giverList.innerHTML = list;
 });
 
 // The initial setup on runtime
 const init = () => {
     insertYearOptions();
-    insertGiverList();
+    insertPrezzyList();
 }
-
 init();
