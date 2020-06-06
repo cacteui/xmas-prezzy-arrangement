@@ -1,4 +1,4 @@
-import people from '../data/people.json';
+import data from '../data/data.json';
 
 const elements = {
     giverList: document.querySelector('.list__giver'),
@@ -7,90 +7,86 @@ const elements = {
 };
 
 const state = {
-    peopleArr: people,
-    receiverList: []
+    participants: data.participants,
 };
 
-// Helper method to insert items to list
-const createItemList = (arr, property) => {
+const createList = () => {
     let list = ``;
-
-    for (let item of arr) {
-        list += `<li>${item[property]}</li>`;
-    }
     
+    for (let participant of state.participants) {
+        const receiver = state.participants.find(receiver => receiver.id === participant.givesPresentTo);
+        list += `<li>${participant.name} gives present to ${receiver.name}</li>`;
+    };
+
     return list;
-}
-
-
-// Insert the giver list
-const insertGiverList = () => {
-    elements.giverList.innerHTML = createItemList(people, 'name');
-}
-
-
-// Insert receiver list
-const insertReceiverList = () => {
-    const peopleArr = state.peopleArr;
-    const firstItem = peopleArr[0];
-    const remainingItems = peopleArr.slice(1);
-    remainingItems.push(firstItem);
-
-    elements.receiverList.innerHTML = createItemList(remainingItems, 'name');
-    state.receiverList = remainingItems;
 };
 
+// Insert the list
+const insertGiverList = () => {
+    elements.giverList.innerHTML = createList();
+}
 
-// Create select of years
+// Create a select of years
 const insertYearOptions = () => {
     const currentYear = new Date().getFullYear();
 
-    for (let i = 0; i <= 10; i++) {
+    for (let i = 0; i <= 30; i++) {
         const year = currentYear + i;
         const option = `<option value="${year}">${year}</option>`;
         elements.selectYear.insertAdjacentHTML('beforeend', option);
     }
 };
 
-
 // When selecting a year change the receiver list
 // Make sure that a person can't give prezzies to himself
 elements.selectYear.addEventListener('change', event => {
-    const peopleArr = state.receiverList;
+    const participants = state.participants;
     
-    // Get full year and the selected year to find the difference
-    const currentYear = new Date().getFullYear();
+    // Get the original year from data and the selected year to find the difference
+    const originalYear = data.originalYear;
     const year = event.target.value;
+    const yearDifference = year - originalYear;
+    
+    let list = ``;
 
-    const difference = year - currentYear;
-    console.log("difference:", difference);
+    for (let participant of participants) {
+        // Add the year difference to the receiverId to find the receiver for that year
+        let receiverId = participant.givesPresentTo + yearDifference;
 
-    // Change the receiver list depending on the year difference
-    if (difference === 1) {
-        const firstItem = peopleArr[0];
-        const newPeopleArr = peopleArr.slice(1);
-        newPeopleArr.push(firstItem);
+        // If the receiverId is bigger than the length of the participants array (and therefore bigger
+        // than any receiver IDs) the length should be subtracted to find the correct receivers participant ID
+        // If the receiverID is bigger than twice the array length this should be taken into account to
+        if (receiverId > participants.length) {
+            const numOfArrLengthsInReceiverId = Math.floor(receiverId / participants.length);
+            const remainder = receiverId % participants.length; // To check if the division is a clean one
+            
+            // If the receiverId is twice or more the length of the array and it is NOT a clean division
+            if (numOfArrLengthsInReceiverId >= 2 && remainder > 0) {
+                receiverId = receiverId - participants.length * numOfArrLengthsInReceiverId;
 
-        elements.receiverList.innerHTML = createItemList(newPeopleArr, 'name');
-    } else {
-        const firstItems = peopleArr.slice(0, difference);
-        const newPeopleArr = peopleArr.slice(difference);
-
-        for (let item of firstItems) {
-            newPeopleArr.push(item);
+            // If the receiverId is twice or more the length of the array and it is a clean division
+            } else if (numOfArrLengthsInReceiverId >= 2 && remainder === 0) {
+                receiverId = receiverId - participants.length * (numOfArrLengthsInReceiverId - 1);
+            } else {
+                receiverId = receiverId - participants.length;
+            }
         }
 
-        elements.receiverList.innerHTML = createItemList(newPeopleArr, 'name');
+        const receiver = participants.find(receiver => receiver.id === receiverId);
+        list += `<li>${participant.name} gives present to ${receiver.name}</li>`;
     }
+
+    elements.giverList.innerHTML = list;
+    
+    // TODO: A person cannot give a present to himself - this year the number should skip     
+
     
 });
-
 
 // The initial setup on runtime
 const init = () => {
     insertYearOptions();
     insertGiverList();
-    insertReceiverList();
 }
 
 init();
