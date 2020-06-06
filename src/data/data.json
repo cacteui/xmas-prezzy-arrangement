@@ -1,56 +1,46 @@
 {
     "originalYear": 2020,
-    "yearsToSeeInFuture": 10,
+    "yearsToSeeInFuture": 30,
     "participants": [
         {
             "name": "Person 1",
-            "id": 1,
-            "givesPrezzyTo": 2
+            "id": 1
         },
         {
             "name": "Person 2",
-            "id": 2,
-            "givesPrezzyTo": 3
+            "id": 2
         },
         {
             "name": "Person 3",
-            "id": 3,
-            "givesPrezzyTo": 4
+            "id": 3
         },
         {
             "name": "Person 4",
-            "id": 4,
-            "givesPrezzyTo": 5
+            "id": 4
         },
         {
             "name": "Person 5",
-            "id": 5,
-            "givesPrezzyTo": 6
+            "id": 5
         },
         {
             "name": "Person 6",
-            "id": 6,
-            "givesPrezzyTo": 7
+            "id": 6
         },
         {
             "name": "Person 7",
-            "id": 7,
-            "givesPrezzyTo": 8
+            "id": 7
         },
         {
             "name": "Person 8",
-            "id": 8,
-            "givesPrezzyTo": 9
+            "id": 8
         },
         {
             "name": "Person 9",
-            "id": 9,
-            "givesPrezzyTo": 10
+            "id": 9
         },
         {
             "name": "Person 10",
-            "id": 10,
-            "givesPrezzyTo": 1
+            "id": 10
         }
     ]
 }

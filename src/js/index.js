@@ -3,8 +3,24 @@ import { viewElements } from './base.js';
 
 const state = {
     data: data,
-    participants: data.participants,
+    participants: [],
 };
+
+const giveParticipantReceiver = () => {
+    const participants = state.data.participants;
+
+    // Add receiverIds to participant
+    for (let participant of participants) {
+        participant["givesPrezzyTo"] = participant.id + 1;
+    }
+
+    // Last item should have first participant in array as receiver
+    participants[participants.length - 1]["givesPrezzyTo"] = 1;
+
+    // Updating the state to be used in later functions
+    state.participants = participants;
+}
+
 
 // Create a list of participants and the participant they should give a prezzy
 const createPrezzyList = () => {
@@ -90,6 +106,7 @@ viewElements.selectYear.addEventListener('change', event => {
 // The initial setup on runtime
 const init = () => {
     insertYearOptions();
+    giveParticipantReceiver();
     insertPrezzyList();
 }
 init();
