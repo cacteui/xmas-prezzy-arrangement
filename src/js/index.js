@@ -30,7 +30,7 @@ const insertGiverList = () => {
 const insertYearOptions = () => {
     const currentYear = new Date().getFullYear();
 
-    for (let i = 0; i <= 30; i++) {
+    for (let i = 0; i <= data.yearsToSeeInFuture; i++) {
         const year = currentYear + i;
         const option = `<option value="${year}">${year}</option>`;
         elements.selectYear.insertAdjacentHTML('beforeend', option);
@@ -46,12 +46,21 @@ elements.selectYear.addEventListener('change', event => {
     const originalYear = data.originalYear;
     const year = event.target.value;
     const yearDifference = year - originalYear;
+
+    // A participant cannot give himself/herself a present - therefore we need to jump every year this will
+    // happen, which is the participants array length - 1
+    const amountOfJumps = Math.floor(yearDifference / (participants.length - 1));
     
     let list = ``;
 
     for (let participant of participants) {
         // Add the year difference to the receiverId to find the receiver for that year
         let receiverId = participant.givesPresentTo + yearDifference;
+
+        // To avoid the situation that a participant gives present to himself/herself
+        if (amountOfJumps > 0) {
+            receiverId = receiverId + amountOfJumps;
+        }
 
         // If the receiverId is bigger than the length of the participants array (and therefore bigger
         // than any receiver IDs) the length should be subtracted to find the correct receivers participant ID
@@ -77,10 +86,6 @@ elements.selectYear.addEventListener('change', event => {
     }
 
     elements.giverList.innerHTML = list;
-    
-    // TODO: A person cannot give a present to himself - this year the number should skip     
-
-    
 });
 
 // The initial setup on runtime
