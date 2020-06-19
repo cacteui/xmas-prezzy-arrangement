@@ -4,7 +4,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-    entry: './src/js/index.js',
+    entry: [
+        './src/js/index.js',
+        './src/sass/main.scss'
+    ],
     output: {
         filename: 'js/bundle.[contenthash].js',
         path: path.resolve(__dirname, './dist'),
