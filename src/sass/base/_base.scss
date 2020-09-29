@@ -1,0 +1,21 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%; // 1rem will be 10px now
+}
+
+body {
+    box-sizing: border-box;
+    max-width: 160rem;
+    margin: 0 auto;
+}
+
+article {
+    padding: 0 3rem;
+}

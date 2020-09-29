@@ -1,5 +1,4 @@
 export const viewElements = {
-    giverList: document.querySelector('.list__giver'),
-    receiverList: document.querySelector('.list__receiver'),
+    list: document.querySelector('.list'),
     selectYear: document.querySelector('.select-year')
 };

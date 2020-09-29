@@ -3,23 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="sass/main.scss">
+    <link type="text/css" rel="stylesheet" href="sass/main.scss">
     <title>Xmas Prezzy Arrangement</title>
 </head>
 <body>
-    <header>
-        <h1>Xmas Prezzy Arrangement</h1>
+    <div class="settings">
+        <div class="settings__item">
+            <label for="snow">Snow</label>
+            <input id="snow" type="checkbox" class="btn--toggle">
+        </div>
+        <div class="settings__item">
+            <label for="theme">Select theme</label>
+            <select id="theme" name="years" class="theme"></select>
+        </div>
+    </div>
+    <header class="header">
+        <h1 class="heading-primary">Xmas Prezzy Arrangement</h1>
     </header>
     <main>
-        <label for="select-year">Select year</label>
-        <select id="select-year" name="years" class="select-year"></select>
-        <article class="list__wrapper">
-            <ul class="list__giver"></ul>
-            <ul class="list__receiver"></ul>
+        <article class="article-list">
+            <div class="select">
+                <label for="select-year">Select year</label>
+                <select id="select-year" name="years" class="select-year"></select>
+            </div>
+            <div class="list__wrapper">
+                <ul class="list"></ul>
+            </div>
         </article>
     </main>
-    <footer>
-        <p>&copy; Copyright 2020</p>
+    <footer class="footer">
+        <p class="footer__text">&copy; Copyright 2020</p>
     </footer>
 </body>
 </html>

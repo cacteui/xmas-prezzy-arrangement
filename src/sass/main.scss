@@ -8,14 +8,11 @@
 
 @import "components/buttons";
 @import "components/dropdown";
+@import "components/list";
 
 @import "layout/footer";
 @import "layout/grid";
 @import "layout/header";
-@import "layout/navigation";
+@import "layout/settings";
 
 @import "pages/home";
-
-html {
-    background-color: $blue;
-}

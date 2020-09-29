@@ -8,10 +8,11 @@ const state = {
 
 const giveParticipantReceiver = () => {
     const participants = state.data.participants;
+    const currentYear = new Date().getFullYear();
 
     // Add receiverIds to participant
     for (let participant of participants) {
-        participant["givesPrezzyTo"] = participant.id + 1;
+        participant["givesPrezzyTo"] = participant.id + (currentYear - state.data.originalYear) + 1;
     }
 
     // Last item should have first participant in array as receiver
@@ -21,6 +22,8 @@ const giveParticipantReceiver = () => {
     state.participants = participants;
 }
 
+// TODO: fix issue with the above function not entering the correct receiver for the other years
+
 
 // Create a list of participants and the participant they should give a prezzy
 const createPrezzyList = () => {
@@ -28,7 +31,7 @@ const createPrezzyList = () => {
     
     for (let participant of state.participants) {
         const receiver = state.participants.find(receiver => receiver.id === participant.givesPrezzyTo);
-        list += `<li>${participant.name} gives present to ${receiver.name}</li>`;
+        list += `<li class="list__item"><span class="list__item--giver">${participant.name}</span> gives present to <span class="list__item--receiver">${receiver.name}</span></li>`;
     };
 
     return list;
@@ -36,7 +39,7 @@ const createPrezzyList = () => {
 
 // View list on UI
 const insertPrezzyList = () => {
-    viewElements.giverList.innerHTML = createPrezzyList();
+    viewElements.list.innerHTML = createPrezzyList();
 }
 
 // Insert options to the years select
@@ -99,8 +102,8 @@ const updateParticipantList = (selectedYear, participants) => {
 viewElements.selectYear.addEventListener('change', event => {
     
     // Update the particpant list on the UI
-    const updatedParticpantList = updateParticipantList(event.target.value, state.data.participants)
-    viewElements.giverList.innerHTML = updatedParticpantList;
+    const updatedParticpantList = updateParticipantList(event.target.value, state.participants)
+    viewElements.list.innerHTML = updatedParticpantList;
 });
 
 // The initial setup on runtime
