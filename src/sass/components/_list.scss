@@ -1,0 +1,30 @@
+.list {
+    list-style-type: none;
+
+    &__item {
+        margin: 2rem 0;
+        padding: 2rem 0;
+
+        &--giver,
+        &--receiver {
+            display: inline-block;
+            background-color: #fff;
+            padding: 1.5rem 2.2rem;
+            transform: skewX(-25deg);
+            // border: 1px solid black;
+
+            &-text {
+                display: inline-block;
+                transform: skewX(25deg);
+            }
+        }
+
+        &--giver {
+            margin-right: 2.5rem;
+        }
+
+        &--receiver {
+            margin-left: 2.5rem;
+        }
+    }
+}

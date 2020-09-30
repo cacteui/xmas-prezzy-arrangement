@@ -1,4 +1,4 @@
 export const viewElements = {
     list: document.querySelector('.list'),
-    selectYear: document.querySelector('.select-year')
+    selectYear: document.querySelector('.select__year')
 };

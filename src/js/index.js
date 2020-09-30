@@ -26,7 +26,14 @@ const insertPrezzyList = participants => {
     
     for (let participant of participants) {
         const receiver = participants.find(receiver => receiver.id === participant.givesPrezzyTo);
-        list += `<li class="list__item"><span class="list__item--giver">${participant.name}</span> gives present to <span class="list__item--receiver">${receiver.name}</span></li>`;
+        list += `
+            <li class="list__item">
+                <span class="list__item--giver">
+                        <span class="list__item--giver-text">${participant.name}</span>
+                </span> gives present to <span class="list__item--receiver">
+                        <span class="list__item--receiver-text">${receiver.name}</span>
+                </span>
+            </li>`;
     };
 
     viewElements.list.innerHTML = list;
